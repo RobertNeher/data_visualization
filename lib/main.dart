@@ -172,104 +172,118 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                     ),
                     const SizedBox(height: 32),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: data.length,
+                      child: SingleChildScrollView(
+                        clipBehavior: Clip.none,
                         physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final strip = data[index];
-                          final double value = strip['currentValue'];
-                          final int colorValue = strip['color'];
-                          final color = Color(colorValue);
+                        child: SizedBox(
+                          height: data.length * 100.0, // Estimated max height per bar
+                          child: Stack(
+                            children: data.asMap().entries.map((entry) {
+                              final int index = entry.key;
+                              final strip = entry.value;
+                              final double value = strip['currentValue'];
+                              final int colorValue = strip['color'];
+                              final color = Color(colorValue);
+                              final double barHeight = strip['height'].toDouble() + 20;
 
-                          return AnimatedContainer(
-                            duration: const Duration(milliseconds: 600),
-                            curve: Curves.easeOutQuart,
-                            margin: const EdgeInsets.only(bottom: 16.0),
-                            height: strip['height'].toDouble() + 20,
-                            padding: const EdgeInsets.all(12.0),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface.withOpacity(0.6),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: color.withOpacity(0.1),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: SvgPicture.network(
-                                    strip['iconUrl'],
-                                    width: 40,
-                                    height: 40,
-                                    placeholderBuilder: (BuildContext context) => Container(
-                                      width: 40,
-                                      height: 40,
-                                      color: color.withOpacity(0.1),
-                                      child: const Center(
-                                        child: SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircularProgressIndicator(strokeWidth: 2),
-                                        ),
-                                      ),
+                              return AnimatedPositioned(
+                                key: ValueKey(strip['title']),
+                                duration: const Duration(milliseconds: 700),
+                                curve: Curves.easeInOutCubic,
+                                top: index * (barHeight + 16.0),
+                                left: 0,
+                                right: 0,
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 600),
+                                  curve: Curves.easeOutQuart,
+                                  height: barHeight,
+                                  padding: const EdgeInsets.all(12.0),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.surface.withOpacity(0.6),
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        strip['title'],
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 14,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: color.withOpacity(0.1),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
                                       ),
-                                      const SizedBox(height: 6),
-                                      Expanded(
-                                        child: Stack(
-                                          alignment: Alignment.centerLeft,
-                                          children: [
-                                            // Progress background
-                                            Container(
-                                              width: double.infinity,
-                                              height: 12,
-                                              decoration: BoxDecoration(
-                                                color: color.withOpacity(0.1),
-                                                borderRadius: BorderRadius.circular(6),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: SvgPicture.network(
+                                          strip['iconUrl'],
+                                          width: 40,
+                                          height: 40,
+                                          placeholderBuilder: (BuildContext context) => Container(
+                                            width: 40,
+                                            height: 40,
+                                            color: color.withOpacity(0.1),
+                                            child: const Center(
+                                              child: SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child: CircularProgressIndicator(strokeWidth: 2),
                                               ),
                                             ),
-                                            // Primary progress bar
-                                            AnimatedContainer(
-                                              duration: const Duration(milliseconds: 600),
-                                              curve: Curves.easeOutQuart,
-                                              width: value, // Normalized value ideally
-                                              height: 12,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    color.withOpacity(0.8),
-                                                    color,
-                                                  ],
-                                                ),
-                                                borderRadius: BorderRadius.circular(6),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: color.withOpacity(0.3),
-                                                    blurRadius: 8,
-                                                    spreadRadius: 1,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              strip['title'],
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 14,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            const SizedBox(height: 6),
+                                            Expanded(
+                                              child: Stack(
+                                                alignment: Alignment.centerLeft,
+                                                children: [
+                                                  // Progress background
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: 12,
+                                                    decoration: BoxDecoration(
+                                                      color: color.withOpacity(0.1),
+                                                      borderRadius: BorderRadius.circular(6),
+                                                    ),
+                                                  ),
+                                                  // Primary progress bar
+                                                  AnimatedContainer(
+                                                    duration: const Duration(milliseconds: 600),
+                                                    curve: Curves.easeOutQuart,
+                                                    width: value,
+                                                    height: 12,
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          color.withOpacity(0.8),
+                                                          color,
+                                                        ],
+                                                      ),
+                                                      borderRadius: BorderRadius.circular(6),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: color.withOpacity(0.3),
+                                                          blurRadius: 8,
+                                                          spreadRadius: 1,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -277,32 +291,32 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                                           ],
                                         ),
                                       ),
+                                      const SizedBox(width: 16),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: color.withOpacity(0.15),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Text(
+                                          value.toStringAsFixed(1),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                            color: color,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: color.withOpacity(0.15),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(
-                                    value.toStringAsFixed(1),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      color: color,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
                     ),
                   ],
