@@ -1,0 +1,56 @@
+{
+  "title": "# Market Share Trends",
+  "subtitle": "## Progression over 2023 - 2026",
+  "startDate": "2023-01-01T00:00:00.000",
+  "endDate": " ",
+  "dataStrips": [
+    {
+      "title": "## Company A",
+      "startValue": 100,
+      "endValue": 500,
+      "interval": [
+        "M",
+        1
+      ],
+      "iconUrl": "https://api.dicebear.com/7.x/initials/svg?seed=A",
+      "color": 4294924066,
+      "height": 40
+    },
+    {
+      "title": "## Company B",
+      "startValue": 300,
+      "endValue": 450,
+      "interval": [
+        "M",
+        1
+      ],
+      "iconUrl": "https://api.dicebear.com/7.x/initials/svg?seed=B",
+      "color": 4280407539,
+      "height": 40
+    },
+    {
+      "title": "## Company C",
+      "startValue": 50,
+      "endValue": 600,
+      "interval": [
+        "M",
+        1
+      ],
+      "iconUrl": "https://api.dicebear.com/7.x/initials/svg?seed=C",
+      "color": 4283215696,
+      "height": 40
+    },
+    {
+      "title": "## Company D",
+      "startValue": 100,
+      "endValue": 800,
+      "interval": [
+        "M",
+        1
+      ],
+      "iconUrl": "https://api.dicebear.com/7.x/initials/svg?seed=D",
+      "color": 4281584691,
+      "height": 40
+    }
+  ]
+}
