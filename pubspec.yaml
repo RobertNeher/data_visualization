@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter_markdown_plus:
+  flutter_svg: ^2.0.7
   gen_data:
     path: '../gen_data'
   flutter:
