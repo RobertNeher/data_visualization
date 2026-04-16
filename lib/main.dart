@@ -114,8 +114,8 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
             end: Alignment.bottomRight,
             colors: [
               Theme.of(context).colorScheme.surface,
-              Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.5),
-              Theme.of(context).colorScheme.primary.withOpacity(0.05),
+              Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.05),
             ],
           ),
         ),
@@ -199,14 +199,14 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                                   height: barHeight,
                                   padding: const EdgeInsets.all(12.0),
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.surface.withOpacity(0.6),
+                                    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.6),
                                     borderRadius: BorderRadius.circular(16),
                                     border: Border.all(
-                                      color: Theme.of(context).colorScheme.outlineVariant.withOpacity(0.3),
+                                      color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3),
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: color.withOpacity(0.1),
+                                        color: color.withValues(alpha: 0.1),
                                         blurRadius: 10,
                                         offset: const Offset(0, 4),
                                       ),
@@ -223,7 +223,7 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                                           placeholderBuilder: (BuildContext context) => Container(
                                             width: 40,
                                             height: 40,
-                                            color: color.withOpacity(0.1),
+                                            color: color.withValues(alpha: 0.1),
                                             child: const Center(
                                               child: SizedBox(
                                                 width: 20,
@@ -258,7 +258,7 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                                                     width: double.infinity,
                                                     height: 12,
                                                     decoration: BoxDecoration(
-                                                      color: color.withOpacity(0.1),
+                                                      color: color.withValues(alpha: 0.1),
                                                       borderRadius: BorderRadius.circular(6),
                                                     ),
                                                   ),
@@ -271,14 +271,14 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                                                     decoration: BoxDecoration(
                                                       gradient: LinearGradient(
                                                         colors: [
-                                                          color.withOpacity(0.8),
+                                                          color.withValues(alpha: 0.8),
                                                           color,
                                                         ],
                                                       ),
                                                       borderRadius: BorderRadius.circular(6),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: color.withOpacity(0.3),
+                                                          color: color.withValues(alpha: 0.3),
                                                           blurRadius: 8,
                                                           spreadRadius: 1,
                                                         ),
@@ -298,7 +298,7 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
                                           vertical: 4,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: color.withOpacity(0.15),
+                                          color: color.withValues(alpha: 0.15),
                                           borderRadius: BorderRadius.circular(8),
                                         ),
                                         child: Text(
