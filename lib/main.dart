@@ -59,7 +59,7 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
           endValue: (s['endValue'] as num).toDouble(),
           interval: (s['interval'][0] as String, s['interval'][1] as int),
           iconUrl: s['iconUrl'],
-          color: s['color'] as int,
+          color: _parseHexColor(s['color'] as String),
           height: (s['height'] as num).toDouble(),
         );
       }).toList();
@@ -92,6 +92,14 @@ class _BarChartRaceWidgetState extends State<BarChartRaceWidget> {
   void dispose() {
     _generateData?.stopStream();
     super.dispose();
+  }
+
+  int _parseHexColor(String hex) {
+    hex = hex.replaceFirst('#', '');
+    if (hex.length == 6) {
+      hex = 'FF$hex';
+    }
+    return int.parse(hex, radix: 16);
   }
 
   @override
